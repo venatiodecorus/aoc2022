@@ -1,0 +1,28 @@
+#!/bin/python
+import requests
+import os
+from zoneinfo import ZoneInfo
+from datetime import datetime
+
+base_dir = os.path.realpath(os.path.dirname(__file__))
+
+with open(base_dir + "/.session", "r") as file:
+    session = file.read().rstrip()
+
+today = datetime.now(ZoneInfo("America/Toronto"))
+year = str(today.year)
+day = str(today.day)
+
+dir = f"{base_dir}/{year}/{day.zfill(2)}"
+if os.path.exists(dir) == False:
+    os.makedirs(dir)
+
+response = requests.get(
+    f"https://adventofcode.com/{year}/day/{day}/input", cookies={"session": session}
+)
+
+input_file = f"{dir}/input.txt"
+with open(input_file, "wb") as f:
+    f.write(response.content)
+
+print(f"todays input saved to {input_file}")
