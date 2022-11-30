@@ -3,6 +3,7 @@ import requests
 import os
 from zoneinfo import ZoneInfo
 from datetime import datetime
+import shutil
 
 base_dir = os.path.realpath(os.path.dirname(__file__))
 
@@ -24,5 +25,7 @@ response = requests.get(
 input_file = f"{dir}/input.txt"
 with open(input_file, "wb") as f:
     f.write(response.content)
+
+shutil.copyfile(base_dir + "/template.py", dir + "/solution.py")
 
 print(f"todays input saved to {input_file}")
