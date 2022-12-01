@@ -1,2 +1,7 @@
 input.txt
 .session
+
+bin
+include
+lib
+pyvenv.cfg
